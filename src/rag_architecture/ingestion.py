@@ -5,7 +5,9 @@ import logging
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.document_transformers.openai_functions import create_metadata_tagger
+from langchain_community.document_transformers.openai_functions import (
+    create_metadata_tagger,
+)
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
@@ -44,6 +46,7 @@ EXTRA_LIGATURES = {
 }
 LIGATURES: dict[str, str] = {**PDF_LIGATURES, **EXTRA_LIGATURES}
 
+
 # ---------------------------------------------------------------------------- #
 # Text cleaning function
 # ---------------------------------------------------------------------------- #
@@ -68,6 +71,7 @@ def clean_text(raw: str) -> str:
     text = re.sub(r"(?<=[.,])(?=\S)", " ", text)
     text = re.sub(r"\s*\b\d{1,3}\s*$", "", text)
     return text.strip()
+
 
 # ---------------------------------------------------------------------------- #
 # Load and clean PDF pages
@@ -97,6 +101,7 @@ def load_and_clean(file_path: str):
             page.page_content = cleaned
             cleaned_pages.append(page)
     return cleaned_pages
+
 
 # ---------------------------------------------------------------------------- #
 # Tag metadata using OpenAI and LangChain's transformer
@@ -131,6 +136,7 @@ def tag_metadata(docs):
         logger.info(f"[Tagged p{idx} metadata] {doc.metadata}")
     return transformed
 
+
 # ---------------------------------------------------------------------------- #
 # Chunk documents into vector-friendly pieces
 # ---------------------------------------------------------------------------- #
@@ -150,6 +156,7 @@ def chunk_docs(docs):
         chunk_overlap=150,
     )
     return splitter.split_documents(docs)
+
 
 # ---------------------------------------------------------------------------- #
 # Store vector embeddings into MongoDB Atlas

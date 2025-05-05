@@ -12,7 +12,9 @@ REQUIRED_ENV_VARS = [
 missing = [var for var in REQUIRED_ENV_VARS if not os.getenv(var)]
 
 if missing:
-    raise EnvironmentError(f"Missing required environment variables: {', '.join(missing)}")
+    raise EnvironmentError(
+        f"Missing required environment variables: {', '.join(missing)}"
+    )
 
 # Export safe access to your env vars
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
