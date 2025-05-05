@@ -17,13 +17,19 @@ dependencies = [
     "python-dotenv (>=1.1.0,<2.0.0)",
     "langchain-mongodb (>=0.6.1,<0.7.0)",
     "fastapi (>=0.115.12,<0.116.0)",
-    "uvicorn (>=0.34.2,<0.35.0)"
+    "uvicorn (>=0.34.2,<0.35.0)",
 ]
 
 [tool.poetry]
 packages = [{include = "rag_architecture", from = "src"}]
 
 
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.2.0"
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+pre-commit = "^3.5.0"

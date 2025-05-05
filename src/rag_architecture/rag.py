@@ -50,9 +50,7 @@ vectorStore = MongoDBAtlasVectorSearch.from_connection_string(
 def query_data(query: str):
     retriever = vectorStore.as_retriever(
         search_type="similarity",
-        search_kwargs={
-            "k": 3
-        },
+        search_kwargs={"k": 3},
     )
 
     template = """
@@ -70,35 +68,30 @@ def query_data(query: str):
 
     # this is a dictionary
     retrieve = {
-        "context": retriever | (lambda docs: "\n\n".join([d.page_content for d in docs])),
-        "question": RunnablePassthrough()
+        "context": retriever
+        | (lambda docs: "\n\n".join([d.page_content for d in docs])),
+        "question": RunnablePassthrough(),
     }
 
     llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, temperature=0)
     response_parser = StrOutputParser()
 
-    rag_chain = (
-        retrieve
-        | custom_rag_prompt
-        | llm
-        | response_parser
-    )
-# Logic when working without UI
+    rag_chain = retrieve | custom_rag_prompt | llm | response_parser
+    # Logic when working without UI
     # answer = rag_chain.invoke(query)
     # return answer
 
-# print(query_data("What is the difference between a collection and database in MongoDB?"))
-# print(query_data("Why is the sky blue"))
+    # print(query_data("What is the difference between a collection and database in MongoDB?"))
+    # print(query_data("Why is the sky blue"))
 
-# Here is where we integrate with UI
-# if __name__ == "__main__":
-#     while True:
-#         user_query = input("Ask me a question about MongoDB (or type 'exit' to quit): ")
-#         if user_query.lower() in ["exit", "quit"]:
-#             print("Goodbye! ")
-#             break
-#         print(query_data(user_query))
+    # Here is where we integrate with UI
+    # if __name__ == "__main__":
+    #     while True:
+    #         user_query = input("Ask me a question about MongoDB (or type 'exit' to quit): ")
+    #         if user_query.lower() in ["exit", "quit"]:
+    #             print("Goodbye! ")
+    #             break
+    #         print(query_data(user_query))
 
-
-# Logic when working with UI
+    # Logic when working with UI
     return rag_chain.invoke(query)
