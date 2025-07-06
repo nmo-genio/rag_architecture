@@ -53,4 +53,3 @@ Send a POST request to `/api/query` with a JSON body containing a `question` fie
 ## License
 
 This project is released under the MIT License. See [LICENSE](LICENSE) for details.
-
