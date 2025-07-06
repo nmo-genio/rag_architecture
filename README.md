@@ -7,6 +7,7 @@ This project demonstrates a simple Retrieval-Augmented Generation (RAG) workflow
 - **Document ingestion** – Cleans PDF pages, tags metadata with OpenAI, chunks the text and stores vector embeddings in MongoDB Atlas.
 - **Question answering** – Queries the vector store using similarity search and generates answers with OpenAI's chat model.
 - **FastAPI service** – Exposes a `/api/query` endpoint for asking questions and a `/api/stats` endpoint to see basic usage metrics.
+- **Web Interface** – A [companion web UI](https://github.com/nmo-genio/mongodb-assistant-ui) is available for a more interactive experience.
 
 ## Requirements
 
